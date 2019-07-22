@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.aceproject.demo.teamSrSlot">
+
+	<resultMap id="TeamSrSlotMap" type="TeamSrSlot">
+		<result property="teamId" column="team_id"/>
+		<result property="slotNo" column="slot_no"/>
+		<result property="playerId" column="player_id"/>
+		<result property="contractYN" column="contract_yn"/>
+		<result property="crtDate" column="crt_date"/>
+		<result property="updDate" column="upd_date"/>
+	</resultMap>
+    
+    <select id="selectList" parameterType="int" resultMap="TeamSrSlotMap">
+		select *
+		from team_sr_slot
+		where team_id = #{teamId}
+    </select>
+    
+    <select id="select" parameterType="map" resultType="TeamSrSlot">
+		select *
+		from team_sr_slot
+		where team_id = #{teamId}
+		and slot_no = #{slotNo}
+    </select>
+    
+    <insert id="insert" parameterType="TeamSrSlot">
+        insert into
+        team(
+            team_id
+            , slot_no
+            , player_id
+            , contract_yn
+            , crt_date
+            , upd_date)
+        values(
+            #{teamId}
+            , #{slotNo}
+            , #{playerId}
+            , #{contractYN}
+            , current_timestamp
+            , current_timestamp
+            , current_timestamp)
+    </insert>
+    
+    
+    <update id="update" parameterType="TeamSrSlot">
+        update team_sr_slot set
+        	player_id = #{playerId},
+        	contract_yn = #{contractYN},
+            upd_date = current_timestamp
+        where
+            team_id = #{teamId}
+            and slot_no = #{slotNo}
+    </update>
+
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.aceproject.demo.dao.player">
+    
+    <resultMap id="PlayerMap" type="Player">
+		<result property="playerId" column="player_id"/>
+		<result property="personId" column="person_id"/>
+		<result property="teamCode" column="team_code"/>
+		<result property="cost" column="cost"/>
+		<result property="crtDate" column="crt_date"/>
+		<result property="updDate" column="upd_date"/>
+	</resultMap>
+
+	<select id="selectList" resultMap="PlayerMap">
+        select *
+        from player
+    </select>
+    
+    <select id="select" parameterType="int" resultType="Player">
+        select *
+        from player
+        where player_id = #{playerId}
+    </select>
+    
+    <insert id="insert" parameterType="Player">
+        insert into
+        player(
+            person_id
+            , team_code
+            , cost
+            , crt_date
+            , upd_date)
+        values(
+            #{personId}
+            , #{teamCode}
+            , #{cost}
+            , current_timestamp
+            , current_timestamp)
+            
+        <selectKey keyProperty="playerId" resultType="int">
+        	select last_insert_id()
+        </selectKey>
+    </insert>
+    
+    <update id="update" parameterType="Player">
+        update player set
+        	person_id = #{personId},
+        	team_code = #{teamCode},
+            cost = #{cost},
+            upd_date = current_timestamp
+        where
+            player_id = #{playerId}
+    </update>
+    
+</mapper>

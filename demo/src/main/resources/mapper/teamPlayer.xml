@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.aceproject.demo.dao.teamPlayer">
+
+	<resultMap id="TeamPlayerMap" type="TeamPlayer">
+		<result property="teamId" column="team_id"/>
+		<result property="playerId" column="player_id"/>
+		<result property="level" column="level"/>
+		<result property="exp" column="exp"/>
+		<result property="crtDate" column="crt_date"/>
+		<result property="updDate" column="upd_date"/>
+	</resultMap>
+    
+    <select id="selectList" parameterType="int" resultMap="TeamPlayerMap">
+		select *
+		from team_player
+		where team_id = #{teamId}
+    </select>
+    
+    <select id="select" parameterType="map" resultType="TeamPlayer">
+		select *
+		from team_player
+		where team_id = #{teamId}
+		and player_id = #{playerId}
+    </select>
+    
+    <insert id="insert" parameterType="TeamPlayer">
+        insert into
+        team_player(
+            team_id
+            , player_id
+            , crt_date
+            , upd_date)
+        values(
+            #{teamId}
+            , #{playerId}
+            , current_timestamp
+            , current_timestamp)
+    </insert>
+    
+    
+    <update id="update" parameterType="TeamPlayer">
+        update team_player set
+        	level = #{level},
+        	exp = #{exp},
+            upd_date = current_timestamp
+        where
+            team_id = #{teamId}
+            and player_id = #{playerId}
+    </update>
+
+</mapper>

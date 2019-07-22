@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.aceproject.demo.dao.account">
+    
+    <select id="select" parameterType="int" resultType="Account">
+        select *
+        from account
+        where team_id = #{teamId}
+    </select>
+    
+    <insert id="insert" parameterType="Account">
+        insert into
+        account(
+            team_id
+            , ap
+            , crt_date
+            , upd_date)
+        values(
+            #{teamId}
+            , #{ap}
+            , current_timestamp
+            , current_timestamp)
+            
+        <selectKey keyProperty="teamId" resultType="int">
+        	select last_insert_id()
+        </selectKey>
+    </insert>
+    
+    <update id="update" parameterType="Account">
+        update account set
+            ap = #{ap},
+            upd_date = current_timestamp
+        where
+            team_id = #{teamId}
+    </update>
+    
+</mapper>
